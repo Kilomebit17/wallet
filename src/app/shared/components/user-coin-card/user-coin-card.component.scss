@@ -1,0 +1,30 @@
+.user-coin-card {
+    background-color: #2D3845;
+    margin-top: 35px;
+    border-radius: 15px;
+    padding: 15px 35px;
+    box-shadow: inset 0px 0px 40px rgba($color: #FFFFFF, $alpha: .1);
+    text-align: center;
+
+    font-family: "Poppins",sans-serif;
+    &-wallet-address {
+        font-size: 22px;
+        color: #fff;
+        margin:25px 0 15px;
+    }
+    &-name {
+        font-size: 18px;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+    &-centered {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .card-data {
+            color: #fff;
+            font-size: 15px;
+            font-family:"Inter",sans-serif;
+        }
+    }
+}
