@@ -1,0 +1,14 @@
+.my-cards {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &-title {
+        color: #fff;
+        font-family: "Poppins",sans-serif;
+    }
+    img {
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+    }
+}
