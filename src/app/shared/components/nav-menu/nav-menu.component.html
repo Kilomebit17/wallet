@@ -1,0 +1,14 @@
+<div class="nav-menu">
+    <div class="logo-name">
+        Walllet
+    </div>
+    <div 
+        class="nav-list" 
+        *ngFor="let nav of navList"
+        [ngClass]="{'active': nav.menu === selectedNav}"
+        (click)="selectRouterLink(nav.menu)"
+        >
+            <img [src]="nav.icon" [alt]="nav.menu" >
+        <!-- <div class="nav-name">{{nav.menu}}</div> -->
+    </div>
+</div>

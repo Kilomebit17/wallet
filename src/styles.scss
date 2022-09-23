@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1B2026;
+    font-size: 22px;
+    font-family: "Inter",sans-serif;
+}
+* {
+    box-sizing: border-box;
+}
+.container {
+    width: 100%;
+    max-width: 1000px;
+    padding:0 25px;
+}

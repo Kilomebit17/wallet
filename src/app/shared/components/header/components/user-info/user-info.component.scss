@@ -1,0 +1,44 @@
+.user-info {
+    background-color: #262B31;
+    padding:8px 15px;
+    border-radius: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .user-nickname {
+        margin:0 20px 0 10px;
+        
+        .user-name {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 400;
+
+        }
+
+        .description {
+            margin-top: 4px;
+            font-size: 14px;
+            color: #A6A7AD;
+            font-style: oblique;
+        }
+    }
+    .notification {
+        margin-right: 20px;
+
+        img {
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+        }
+    }
+    .wallet {
+        
+        img {
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+        }
+    }
+}

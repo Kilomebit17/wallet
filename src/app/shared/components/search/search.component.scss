@@ -1,0 +1,22 @@
+.search {
+    background-color: #262B31;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: 600;
+    width: 100%;
+    min-width: 352px;
+    
+    display: flex;
+    align-items: center;
+    font-family: "Poppins",sans-serif;
+
+    &-field {
+        margin-left: 15px;
+        font-size: 18px;
+        color: #fff;
+        outline: none;
+        border: none;
+        background: none;
+        min-width: 250px;
+    }
+}

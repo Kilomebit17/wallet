@@ -1,0 +1,18 @@
+<div class="user-info">
+    <div class="avatar">
+        <app-user-avatar 
+            [userAvatar]="userAvatar"
+            (userChangeAvatarEvent)="userRandomizeAvatar()"
+        ></app-user-avatar>
+    </div>
+    <div class="user-nickname">
+        <div class="user-name">Stayyourself</div>
+        <div class="description">Creator Pro+</div>
+    </div>
+    <div class="notification">
+        <img src="/assets/images/icons/bell.png" alt="notification-icon">
+    </div>
+    <div class="wallet" *ngIf="!web3Service.isWalletConnected">
+        <img src="/assets/images/icons/metamask-icon.svg" alt="wallet-icon" (click)="connectWallet()">
+    </div>
+</div>

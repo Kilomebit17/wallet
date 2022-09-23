@@ -1,0 +1,20 @@
+header {
+    .header-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 30px;
+    }
+    position: relative;
+    &::after {
+        content: "";
+        position: absolute;
+        right: 0%;
+        top: -70%;
+        width: 75px;
+        height: 75px;
+        background-color: #fff;
+        border-radius: 50%;
+        filter: blur(75px);
+    }
+}
