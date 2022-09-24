@@ -1,3 +1,4 @@
+import { Web3Service } from './../../service/web3/web3.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./my-cards.component.scss']
 })
 export class MyCardsComponent implements OnInit {
-
-  constructor() { }
+  constructor(public web3Service:Web3Service) { }
 
   ngOnInit(): void {
   }
-
 }

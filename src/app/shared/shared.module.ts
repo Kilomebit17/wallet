@@ -8,6 +8,8 @@ import { UserAvatarComponent } from './components/user-avatar/user-avatar.compon
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { MyCardsComponent } from './components/my-cards/my-cards.component';
 import { UserCoinCardComponent } from './components/user-coin-card/user-coin-card.component';
+import { BetweenInfoComponent } from './components/between-info/between-info.component';
+import { NumberFormatPipe } from './pipes/number/number-format.pipe';
 
 @NgModule({
     imports:[CommonModule],
@@ -18,7 +20,10 @@ import { UserCoinCardComponent } from './components/user-coin-card/user-coin-car
       UserAvatarComponent,
       NavMenuComponent,
       MyCardsComponent,
-      UserCoinCardComponent
+      UserCoinCardComponent,
+      BetweenInfoComponent,
+      //pipes
+      NumberFormatPipe
     ],
     declarations:[
       HeaderComponent,
@@ -27,7 +32,10 @@ import { UserCoinCardComponent } from './components/user-coin-card/user-coin-car
       UserAvatarComponent,
       NavMenuComponent,
       MyCardsComponent,
-      UserCoinCardComponent
+      UserCoinCardComponent,
+      BetweenInfoComponent,
+      //pipes
+      NumberFormatPipe
     ],
     entryComponents:[]
 })
