@@ -12,10 +12,5 @@ export class DashboardPageComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  public getAddress() {
-    this._web3Service.getWalletAddress()
-  }
-  public disconnect() {
-    this._web3Service.disconnect()
-  }
+
 }
