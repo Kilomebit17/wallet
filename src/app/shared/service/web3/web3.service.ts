@@ -15,15 +15,22 @@ export class Web3Service {
 
   private _wallet = {
     address: '',
-    balanceBNB: null,
-    balanceBUSD: null,
+    shortAddress:'',
+    balanceBNB: 0,
+    balanceBUSD: 0,
   };
 
 
-  public get walletAddress(): string | null {
+  public get walletAddress(): string  {
     return this._wallet.address;
   }
 
+  public get walletShortAddress(): string  {
+    return this._wallet.shortAddress;
+  }
+  public get walletBnbBalance():string | number {
+    return this._wallet.balanceBNB
+  }
   public get isWalletConnected(): boolean {
     return !!this._wallet.address;
   }
@@ -63,6 +70,7 @@ export class Web3Service {
       } catch (error) {
         reject(null)
       }
+
       this._readMetamaskEvents()
 
       await this.getWalletAddress()
@@ -85,6 +93,8 @@ export class Web3Service {
   async getWalletAddress(): Promise<any> {
     const [wallet] = await this.web3js.eth.getAccounts()
     this._wallet.address = wallet
+    this._wallet.shortAddress = `${wallet.substr(0,10)}...${wallet.substr(wallet.length - 10)}`
+
   }
 
   async getBalane(address: any) {
@@ -102,8 +112,15 @@ export class Web3Service {
   private _readMetamaskEvents() {
     this.provider.on("chainChanged", () => {
       console.log('Chain was changed!');
-
     });
+
+    this.provider.on("networkChanged", (newtwork:string) => { //* in callback we get chain number. Look at all chain list -- https://chainlist.org/
+      //TODO change wallet card coin look at network
+      //* 1 its eth mainnet 
+      //* 97 its binance testnet 
+      //* 56 its binance mainnet
+    });
+
     this.provider.on('accountsChanged', function (accounts: any) {
       console.log('Account was changed!');
     });

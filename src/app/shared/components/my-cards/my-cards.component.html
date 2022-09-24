@@ -3,3 +3,8 @@
     <img src="/assets/images/icons/add-circle.svg" alt="circle">
 </div>
 <app-user-coin-card></app-user-coin-card>
+<div class="user-balance">
+    <app-between-info title="Current Balance">
+        <div class="balance">{{web3Service.walletBnbBalance | numberFormat}} BNB</div>
+    </app-between-info>
+</div>

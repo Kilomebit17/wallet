@@ -3,8 +3,8 @@
         <img src="/assets/images/icons/card-logo.svg" alt="logo">
         <img src="/assets/images/icons/wallet-logo.svg" alt="logo">
     </div>
-    <div class="user-coin-card-wallet-address">
-        1234 5678 9101 1111
+    <div class="user-coin-card-wallet-address" (click)="copy()">
+        {{web3Service.walletShortAddress}}
     </div>
     <div class="user-coin-card-name">
         Erfan Rezaie
