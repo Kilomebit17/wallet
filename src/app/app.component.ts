@@ -12,13 +12,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
   async ngOnInit() {
     this._web3Service.checkMetamaskConnection()
-      .then(result => {
-        debugger
-      })
-      .catch(error => {
-        debugger
-        console.log(error);        
-      })
   }
   ngAfterViewInit(): void {
   }

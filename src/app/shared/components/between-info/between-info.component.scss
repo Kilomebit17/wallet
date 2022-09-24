@@ -1,0 +1,11 @@
+.between-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .title {
+        font-family: "Poppins",sans-serif;
+        font-size: 18px;
+        color: #FFF;
+        font-weight: 100;
+    }
+}

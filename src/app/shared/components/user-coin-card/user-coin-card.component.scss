@@ -1,9 +1,8 @@
 .user-coin-card {
-    background-color: #2D3845;
     margin-top: 35px;
     border-radius: 15px;
     padding: 15px 35px;
-    box-shadow: inset 0px 0px 40px rgba($color: #FFFFFF, $alpha: .1);
+    background-size: cover;
     text-align: center;
 
     font-family: "Poppins",sans-serif;
@@ -11,6 +10,7 @@
         font-size: 22px;
         color: #fff;
         margin:25px 0 15px;
+        cursor: pointer;
     }
     &-name {
         font-size: 18px;
