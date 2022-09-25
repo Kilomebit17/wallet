@@ -2,29 +2,36 @@
     margin-top: 35px;
     border-radius: 15px;
     padding: 15px 35px;
-    background-size: cover;
-    text-align: center;
-
+    background-color: #212A34;
+    box-shadow: inset 0px 0px 70px  rgba($color: #FFF, $alpha: .1);
+    border: 2px solid rgba($color: #FFF, $alpha: .1);
+    min-height: 250px;
     font-family: "Poppins",sans-serif;
-    &-wallet-address {
-        font-size: 22px;
-        color: #fff;
-        margin:25px 0 15px;
-        cursor: pointer;
-    }
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between ;
     &-name {
-        font-size: 18px;
+        font-size: 32px;
         color: #fff;
-        margin-bottom: 20px;
+        opacity: .4;
+        font-weight: 600;
+        font-family: "Inter", sans-serif;
     }
     &-centered {
         display: flex;
         justify-content: space-between;
         align-items: center;
         .card-data {
-            color: #fff;
-            font-size: 15px;
-            font-family:"Inter",sans-serif;
+            font-size: 22px;
+            color: #7b7b7b;
+            font-weight: 600;
+            margin:25px 0 15px;
+            cursor: pointer;
+        }
+        img {
+            width: 42px;
+            height: 42px;
         }
     }
 }

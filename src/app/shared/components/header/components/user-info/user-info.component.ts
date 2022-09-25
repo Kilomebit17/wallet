@@ -1,5 +1,6 @@
 
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { WalletType } from 'src/app/shared/interface/my-wallet.interface';
 import { Web3Service } from 'src/app/shared/service/web3/web3.service';
 import { defaultUserAvatar, UserAvatars } from '../../../user-avatar/mock/user-avatar.mock';
 
@@ -19,8 +20,12 @@ export class UserInfoComponent implements OnInit {
   public userRandomizeAvatar():void {
     this.userAvatar = UserAvatars[Math.floor(Math.random() * UserAvatars.length)]
   }
-  public connectWallet():void {
-    this.connectWalletEvent.emit()
+  public walletConnect():void {
+    this.connectWalletEvent.emit(WalletType.walletconnect)
+
+  }
+  public metamaskConnect():void {
+    this.connectWalletEvent.emit(WalletType.metamask)
   }
   private _init() {}
   

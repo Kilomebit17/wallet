@@ -12,7 +12,22 @@
     <div class="notification">
         <img src="/assets/images/icons/bell.png" alt="notification-icon">
     </div>
-    <div class="wallet" *ngIf="!web3Service.isWalletConnected">
-        <img src="/assets/images/icons/metamask-icon.svg" alt="wallet-icon" (click)="connectWallet()">
+    <div 
+        class="wallet" 
+        [ngClass]="{'active': web3Service.isMetaMaskWalletConnected }">
+        <img
+            [ngStyle]="{'cursor': web3Service.isMetaMaskWalletConnected ? 'not-allowed' : 'pointer'}" 
+            src="/assets/images/icons/metamask-icon.svg" 
+            alt="wallet-icon" 
+            (click)="metamaskConnect()">
+    </div>
+    <div 
+        class="wallet-connect" 
+        [ngClass]="{'active': web3Service.isTrustWalletConnected }">
+        <img 
+            [ngStyle]="{'cursor': web3Service.isTrustWalletConnected ? 'not-allowed' : 'pointer'}" 
+            src="/assets/images/icons/WalletConnect-icon.svg" 
+            alt="wallet-icon" 
+            (click)="walletConnect()">
     </div>
 </div>

@@ -1,16 +1,9 @@
-<div class="user-coin-card" [ngStyle]="{'background-image': 'url(' + card + ')'}">
-    <div class="user-coin-card-centered">
-        <img src="/assets/images/icons/card-logo.svg" alt="logo">
-        <img src="/assets/images/icons/wallet-logo.svg" alt="logo">
-    </div>
-    <div class="user-coin-card-wallet-address" (click)="copy()">
-        {{web3Service.walletShortAddress}}
-    </div>
+<div class="user-coin-card">
     <div class="user-coin-card-name">
-        Erfan Rezaie
+        {{cardName}}
     </div>
     <div class="user-coin-card-centered">
-        <div class="card-data">2025/5/1</div>
-        <img [src]="chainLogo" alt="coin-logo">
+        <div class="card-data" (click)="copy()">{{web3Service.walletShortAddress}}</div>
+        <img [src]="chainLogo" alt="coin-logo" *ngIf="chainLogo">
     </div>
 </div>
