@@ -6,7 +6,6 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./between-info.component.scss']
 })
 export class BetweenInfoComponent implements OnInit {
-  @Input() title:string | number | undefined
   constructor() { }
 
   ngOnInit(): void {

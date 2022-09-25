@@ -1,7 +1,7 @@
 import { CopyService } from '../../service/buffer-copy/copy.service';
 import { Web3Service } from 'src/app/shared/service/web3/web3.service';
-import { Component, Input, NgZone, OnInit } from '@angular/core';
-import { MetamaskChainCardIcon, MetamaskChains,MetamaskChainTokenIcons } from '../../interface/my-wallet.interface';
+import { Component, Input,  OnInit } from '@angular/core';
+import { MetamaskChains } from '../../interface/my-wallet.interface';
 
 @Component({
   selector: 'app-user-coin-card',
@@ -9,20 +9,30 @@ import { MetamaskChainCardIcon, MetamaskChains,MetamaskChainTokenIcons } from '.
   styleUrls: ['./user-coin-card.component.scss']
 })
 export class UserCoinCardComponent implements OnInit {
-  @Input() chainLogo = ''
+  @Input() chainLogo:string | undefined
   @Input() cardName = ''
-
+  @Input() cardAddress?:string = ''
+  @Input() isDisconnect:boolean = true
   constructor(
     public web3Service:Web3Service,
-    private _copyService:CopyService  
+    private _copyService:CopyService,
   ) { 
    
   }
 
   ngOnInit():void {}
 
-  public copy():void {
-    this._copyService.copyValue(this.web3Service.metaMaskWalletAddress)
+  public copy(cardAddress:any):void {
+    if(cardAddress === MetamaskChains.binance) {
+      this._copyService.copyValue(this.web3Service.metaMaskWalletAddress)
+    }
+    if(cardAddress === MetamaskChains.twallet) {
+      this._copyService.copyValue(this.web3Service.trustWalletAddress)
+    }
+  }
+  
+  public walletDisconnect() {
+    this.web3Service.trustWalletDisconnect()
   }
 
 }

@@ -1,6 +1,6 @@
 import { StorageService } from './../storage/storage.service';
 import { providers } from 'ethers';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 import { Injectable, NgZone } from '@angular/core';
 
 import Web3Modal from "web3modal";
@@ -12,7 +12,7 @@ import { MetamaskChains } from '../../interface/my-wallet.interface';
   providedIn: 'root'
 })
 export class Web3Service {
-  public metaMaskTrigger$ = new Subject()
+  public metaMaskTrigger$ = new ReplaySubject()
   public trustWalletTrigger$ = new Subject()
   web3Modal: any;
   web3js: any = Web3.givenProvider
@@ -20,23 +20,27 @@ export class Web3Service {
   provider: any;
 
   private _wallet = {
-    address: '',
-    shortAddress:'',
+    metaMaskShortAddress:'',
+    trustWalletShortAddress:'',
     balanceBNB: 0,
     balanceBUSD: 0,
     chain:'',
-    walletConnectAddress:''
+    metaMaskWalletAddress: '',
+    trustWalletConnectAddress:''
   };
 
 
   public get metaMaskWalletAddress(): string  {
-    return this._wallet.address;
+    return this._wallet.metaMaskWalletAddress;
   }
   public get trustWalletAddress(): string  {
-    return this._wallet.walletConnectAddress;
+    return this._wallet.trustWalletConnectAddress;
   }
-  public get walletShortAddress(): string  {
-    return this._wallet.shortAddress;
+  public get metaMaskShortAddress(): string  {
+    return this._wallet.metaMaskShortAddress;
+  }
+  public get trustWalletShortAddress(): string  {
+    return this._wallet.trustWalletShortAddress;
   }
   public get walletBnbBalance():string | number {
     return this._wallet.balanceBNB
@@ -45,10 +49,10 @@ export class Web3Service {
     return this._wallet.chain
   }
   public get isMetaMaskWalletConnected(): boolean {
-    return !!this._wallet.address;
+    return !!this._wallet.metaMaskWalletAddress;
   }
   public get isTrustWalletConnected(): boolean {
-    return !!this._wallet.walletConnectAddress;
+    return !!this._wallet.trustWalletConnectAddress;
   }
 
  
@@ -63,9 +67,10 @@ export class Web3Service {
   }
   
   public checkTrustWalletConnection() { //! on load platform checking trust wallet
-    const {accounts,chainId,connected,...other} = JSON.parse(this._storageService.get('walletconnect'))
-    if(connected) {
-      this._wallet.walletConnectAddress = accounts[0]
+    const walletInfo = JSON.parse(this._storageService.get('walletconnect'))
+    if(walletInfo?.connected) {
+      this._wallet.trustWalletConnectAddress = walletInfo.accounts[0]
+      this._wallet.trustWalletShortAddress = `${walletInfo.accounts[0].substr(0,8)}...${walletInfo.accounts[0].substr(walletInfo.accounts[0].length - 8)}`
     }
   }
 
@@ -83,7 +88,7 @@ export class Web3Service {
   
         await this.getWalletAddress()
   
-        await this.getBalane(this._wallet.address)
+        await this.getBalane(this._wallet.metaMaskWalletAddress)
   
         await this.getChainValue()
     })
@@ -107,9 +112,12 @@ export class Web3Service {
     this.provider = await this.web3Modal.connect(); // set provider
 
     const accounts = (await this.provider.enable()) as string[]
-    this._wallet.walletConnectAddress = accounts[0]
+    this._wallet.trustWalletConnectAddress = accounts[0]
+    this._wallet.trustWalletShortAddress = `${accounts[0].substr(0,8)}...${accounts[0].substr(accounts[0].length - 8)}`
 
     this.web3WalletconnectProvider = new providers.Web3Provider(this.provider) //* for use methods trust wallet
+
+    this._readTrustWalletEvents()
 
     this._zone.run(() => {
       this.checkTrustWalletConnection()
@@ -126,14 +134,12 @@ export class Web3Service {
     this.web3Modal.clearCachedProvider();
 
     this.provider = await this.web3Modal.connect(); // set provider
-    
-    this.web3WalletconnectProvider = new providers.Web3Provider(this.provider) 
 
     this.web3js = new Web3(this.provider); // create web3 instance
 
     this._zone.run(async () => { //! for platform update informations
         await this.getWalletAddress()
-        await this.getBalane(this._wallet.address)
+        await this.getBalane(this._wallet.metaMaskWalletAddress)
         await this.getChainValue()
 
         this.metaMaskTrigger$.next()
@@ -146,8 +152,8 @@ export class Web3Service {
     const [wallet] = await this.web3js.eth.getAccounts() //! getting wallet from metamask
 
     if (wallet) {
-      this._wallet.address = wallet
-      this._wallet.shortAddress = `${wallet.substr(0,8)}...${wallet.substr(wallet.length - 8)}`
+      this._wallet.metaMaskWalletAddress = wallet
+      this._wallet.metaMaskShortAddress = `${wallet.substr(0,8)}...${wallet.substr(wallet.length - 8)}`
     }
 
   }
@@ -175,13 +181,35 @@ export class Web3Service {
     })
   }
 
-  async disconnect(): Promise<any> { 
+  public async metaMaskWalletDisconnect(): Promise<any> { 
     //TODO disconnect from metamask
-    // await this.web3js.eth.currentProvider.disconnect()
+  }
+
+  public async trustWalletDisconnect():Promise<any> { //! trust wallet disconnect
+    this._wallet.trustWalletConnectAddress = ''
+    this._wallet.trustWalletShortAddress = ''
+
+    try {
+        await this.provider.close()
+    } catch (e) {
+        console.log(e)
+    }
+    // Also clear the cacheProvider so it asks for wallet options again, instead of asking the login of previous provider
+    try {
+        await this.web3Modal.clearCachedProvider();
+    } catch (e) {
+        console.log(e)
+    }
+  }
+
+  private _readTrustWalletEvents():void {
+    this.web3WalletconnectProvider.on("disconnect", (code: number, reason: string) => {
+      console.log(code, reason);
+    });
   }
   private _readMetamaskEvents():void {
     this.provider.on("chainChanged", async () => { //! on metamask chain changed 
-      await this.getBalane(this._wallet.address)
+      await this.getBalane(this._wallet.metaMaskWalletAddress)
       console.log('Chain was changed!');
     });
 
@@ -192,13 +220,19 @@ export class Web3Service {
       //* 56 its binance mainnet
       this._zone.run(async () => {
         this._setChainId(newtwork)
-        await this.getBalane(this._wallet.address)
+        await this.getBalane(this._wallet.metaMaskWalletAddress)
         this.metaMaskTrigger$.next()
       })
     });
 
-    this.provider.on('accountsChanged', function (accounts: any) { //! on metamask change account 
+    this.provider.on('accountsChanged',  (accounts: any) => { //! on metamask change account 
       console.log('Account was changed!');
+      if(accounts.length === 0) {
+        this._wallet.metaMaskShortAddress = ''
+        this._wallet.metaMaskWalletAddress = ''
+        this._wallet.balanceBNB = 0
+        this._zone.run(() => {})
+      }
     });
 
     
