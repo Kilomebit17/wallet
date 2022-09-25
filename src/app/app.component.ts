@@ -12,6 +12,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
   async ngOnInit() {
     this._web3Service.checkMetamaskConnection()
+    this._web3Service.checkTrustWalletConnection()
   }
   ngAfterViewInit(): void {
   }
