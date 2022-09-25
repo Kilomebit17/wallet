@@ -4,13 +4,18 @@ export enum MetamaskChainTokenIcons {
 }
 export enum MetamaskChainCardIcon {
     binance = '/assets/images/icons/binance-card.png',
-    eth = '/assets/images/icons/ethereum-card.png'
+    eth = '/assets/images/icons/eth-card.png'
 }
 export enum MetamaskChains {
-    binance = 'binance',
-    eth = 'ethereum'
+    binance = 'Binance',
+    eth = 'Ethereum',
+    twallet = 'Wallet Connect'
 }
 export enum MetamaskTokens {
     bnb = 'BNB',
     eth = 'ETH'
+}
+export enum WalletType {
+    metamask = 'metamask',
+    walletconnect = 'walletconnect'
 }

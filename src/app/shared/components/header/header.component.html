@@ -3,7 +3,7 @@
         <div class="header-wrapper">
             <app-search></app-search>
             <app-user-info
-                (connectWalletEvent)="connectAccount()"
+                (connectWalletEvent)="connectAccount($event)"
             ></app-user-info>
         </div>
     </header>
